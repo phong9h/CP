@@ -12,7 +12,7 @@
 #include <map>
 using namespace std;
 
-#define maxn 202
+#define maxn 502
 #define FOR(i, l, r) for (int i=l; i<=r; ++i)
 #define FORD(i, r, l) for (int i=r; i>=l; --i)
 #define REP(i, r) for (int i=0; i<(int)r; ++i)
@@ -48,6 +48,7 @@ queue<int> qu;
 bool findPath() {
 	FOR(i, 0, m+n+1) d[i] = inf;
 	memset(inqueue, false, sizeof(inqueue));
+	memset(trace, 0, sizeof(trace));
 	inqueue[s] = true;
 	qu.push(s);
 	d[s] = 0;
@@ -91,16 +92,20 @@ void solve() {
 	t = m+n+1;
 	FOR(i, 1, m) cin >> c[s][i];
 	FOR(i, 1, n) cin >> c[i+m][t];
-	FOR(i, 1, m) FOR(j, 1, n) cin >> w[i][j+m];
+	FOR(i, 1, m) FOR(j, 1, n) {
+		cin >> w[i][j+m];
+		w[j+m][i] = w[i][j+m];
+	}
 	while (findPath())
         incFlow();
-	cout << res;
+	cout << res << '\n';
 }
 
 int main() {
-    freopen("assign4.inp", "r", stdin);
-    //freopen("", "w", stdout);
+    //freopen("assign4.inp", "r", stdin);
+    //freopen("assign4.out", "w", stdout);
     ios::sync_with_stdio(0); cin.tie(0);
 	int nTest; cin >> nTest;
 	while (nTest--) solve();
 }
+
